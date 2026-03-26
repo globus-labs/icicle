@@ -1,0 +1,40 @@
+  /* Icicle colors: #3388ff, #5599ff */
+
+  /* Light mode */
+  [data-md-color-scheme="default"] {
+    --md-primary-fg-color: #3388ff;
+    --md-primary-fg-color--light: #5599ff;
+    --md-primary-fg-color--dark: #3388ff;
+    --md-primary-bg-color: #ffffff;
+    --md-primary-bg-color--light: #ffffff;
+    --md-accent-fg-color: #5599ff;
+  }
+
+  [data-md-color-scheme="default"] .md-header {
+    background-color: #3388ff;
+  }
+
+  [data-md-color-scheme="default"] .md-tabs {
+    background-color: #5599ff;
+  }
+
+  [data-md-color-scheme="default"] .md-nav__link--active,
+  [data-md-color-scheme="default"] .md-nav__link:hover {
+    color: #3388ff;
+  }
+
+  /* Dark mode */
+  [data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #3388ff;
+    --md-primary-fg-color--light: #5599ff;
+    --md-primary-fg-color--dark: #3388ff;
+    --md-accent-fg-color: #5599ff;
+  }
+
+  [data-md-color-scheme="slate"] .md-header {
+    background-color: #3388ff;
+  }
+
+  [data-md-color-scheme="slate"] .md-tabs {
+    background-color: #5599ff;
+  }

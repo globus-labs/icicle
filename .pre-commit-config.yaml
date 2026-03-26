@@ -1,0 +1,53 @@
+ci:
+  autofix_prs: false
+repos:
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: v6.0.0
+    hooks:
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      # - id: check-docstring-first
+      - id: check-json
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-merge-conflict
+      - id: name-tests-test
+        args: ["--pytest-test-first"]
+        exclude: "(conftest|backend_config|scenarios|workloads)\\.py$"
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+  - repo: 'https://github.com/codespell-project/codespell'
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        exclude: ^scripts/plots/
+  - repo: "https://github.com/astral-sh/ruff-pre-commit"
+    rev: v0.14.4
+    hooks:
+      - id: ruff-check
+        types_or: [python, pyi, jupyter]
+        args: [--extend-select, "I,F401", --fix]
+        exclude: ^scripts/plots/
+      - id: ruff-format
+        types_or: [python, pyi, jupyter]
+        exclude: ^scripts/plots/
+  - repo: "https://github.com/pre-commit/mirrors-mypy"
+    rev: v1.18.2
+    hooks:
+      - id: mypy
+        additional_dependencies: []
+        exclude: ^(scripts|tests)/
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        files: ^scripts/.*\.sh$|^src/ingest/compile\.sh$
+        exclude: ^scripts/(ingest-analysis/|ingest-kda/|plots/)
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets

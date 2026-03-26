@@ -1,0 +1,188 @@
+[build-system]
+requires = ["setuptools>=64.0", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icicle"
+version = "0.1.0"
+authors = [{ name = "Icicle Developers", email = "haochenpan@uchicago.com" }]
+description = "Scalable metadata indexing and monitoring for HPC file systems."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = ["pyyaml"]
+
+[project.urls]
+homepage = "https://github.com/globus-labs/icicle"
+documentation = "https://globus-labs.github.io/icicle/"
+repository = "https://github.com/globus-labs/icicle"
+
+[project.scripts]
+icicle = "src.icicle.__main__:main"
+
+[project.optional-dependencies]
+dev-core = [
+    "aws-msk-iam-sasl-signer-python",
+    "boto3",
+    "confluent-kafka",
+    "covdefaults>=2.2",
+    "coverage",
+    "datasketches",
+    "ddsketch",
+    "globus-sdk",
+    "mypy",
+    "orjson",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "ruff>=0.2.0",
+    "tox",
+    "virtualenv",
+]
+dev = [
+    "icicle[dev-core]",
+    "apache-flink==1.20",
+]
+docs = [
+    "zensical",
+    "mkdocstrings-python",
+]
+
+[tool.codespell]
+skip = """
+.git,
+.github,
+.venv,
+__pycache__,
+build,
+dist,
+.*egg-info
+"""
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
+omit = ["examples"]
+
+[tool.mypy]
+python_version = "3.11"
+explicit_package_bases = true
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+plugins = []
+
+[[tool.mypy.overrides]]
+module = "testing.*"
+allow_incomplete_defs = true
+allow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+allow_incomplete_defs = true
+allow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "confluent_kafka.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "yaml.*"
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 79
+target-version = "py311"
+exclude = ["*/conftest.py"]
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "single"
+
+[tool.ruff.lint]
+# See all rules here: https://beta.ruff.rs/docs/rules
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    # mccabe
+    "C90",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # pydocstyle
+    "D",
+    # pyupgrade
+    "UP",
+    # flake8-2020
+    "YTT",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-commas
+    "COM",
+    # flake8-comprehensions
+    "C4",
+    # flake8-implicit-str-concat
+    "ISC",
+    # flake8-pytest-style
+    "PT",
+    # flake8-quotes
+    "Q",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # PyLint
+    "PL",
+    # ruff-specific
+    "RUF",
+]
+extend-ignore = []
+
+[tool.ruff.lint.flake8-pytest-style]
+parametrize-values-type = "tuple"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+known-first-party = ["icicle", "test", "testing"]
+order-by-type = false
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"*/__init__.py" = ["D104", "F401"]
+"src/icicle/gpfs_source.py" = ["PLC0415"]
+"src/ingest/*.py" = ["N802", "N803", "N806", "D107", "PLR0913"]
+"src/ingest/utils/*.py" = ["N802", "N803", "N806", "D105", "D107", "D205", "E501", "PLR0913"]
+"scripts/ingest-preprocessing/*.py" = ["B007", "B905", "C901", "D100", "D103", "D205", "E501", "N806", "PLE0704", "PLR0912", "PLR0915", "PLR2004", "PLW2901", "PT018", "SIM108"]
+"scripts/ingest-analysis/*.py" = ["A004", "D100", "D103", "D205", "D415", "E501", "F404", "N806", "N812", "PLC0415", "RUF005"]
+"scripts/ingest-analysis/*.ipynb" = ["A004", "B905", "D103", "E501", "F404", "F841", "N806", "RUF003"]
+"*/test_*.py" = ["B007", "B011", "B905", "C401", "C901", "D100", "D101", "D102", "D103", "D107", "D205", "D415", "E402", "E501", "E741", "F841", "N817", "PLC0415", "PLR0915", "PLR2004", "PT007", "PT011", "PT015", "PT018", "RUF002", "RUF003", "RUF059", "SIM102", "SIM105", "SIM115"]
+"tests/icicle/workloads.py" = ["B905", "C901", "D101", "D205", "D415", "E501", "PLC0415", "PLR0912", "PLR0915", "PLR2004", "RUF001", "RUF002", "RUF003"]
+"tests/icicle/scenarios.py" = ["B905", "D101", "D103", "D205", "D415", "E501", "F841", "PLR2004", "PLR0915", "RUF002", "RUF003", "SIM102"]
+"scripts/hooks/*.py" = ["D101", "D102", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "scripts.hooks"]
+exclude = ["tests*", "testing*"]
+namespaces = false

@@ -1,0 +1,55 @@
+common:
+  aws_region: us-east-1
+  aws_az: us-east-1d
+  ssh_key_name: lustre-alpha-1-key
+  ssh_key_path: ~/.ssh/lustre-alpha-1-key.pem
+  vpc_id: vpc-0c145a2f741d67a0e
+  security_group: sg-089422071e2fdaa08
+  root_volume_size: 50
+  client_instance_type: c5a.large
+  # Icicle
+  git_username: haochenpan
+  git_repo: https://github.com/globus-labs/icicle.git
+  git_branch: v4-dev
+
+lustre:
+  fsname: fs0
+  fs_capacity_gb: 1024
+  placement_group: lustre-alpha-5-pg
+  server_ssh_user: ec2-user
+  client_ssh_user: ubuntu
+  # MGS (combined with first MDS)
+  mgs_instance_type: c5a.large
+  mgs_volume_size_gb: 32
+  # MDS
+  mds_instance_type: c5a.large
+  mds_volume_size_gb: 32
+  num_mds: 2
+  # OSS
+  oss_instance_type: c5a.large
+  num_oss: 2
+  num_ost_per_server: 2
+  # Clients
+  num_compute_clients: 2
+
+gpfs:
+  cluster_name: gpfs-cluster
+  fs_name: fs1
+  fileset_name: fset1
+  data_volume_size_gb: 100
+  gpfs_s3_path: s3://gpfs-developer-bucket/Storage_Scale_Developer-5.2.3.2-x86_64-Linux.zip
+  placement_group: ""
+  ssh_user: ubuntu
+  # Topology
+  num_gpfs_servers: 1
+  num_clients: 1
+  gpfs_server_instance_type: c5a.xlarge
+  # Kafka — set dedicated_kafka_node: false to co-locate on gpfs0
+  dedicated_kafka_node: false
+  kafka_instance_type: c5a.large
+  kafka_topics: fset1-topic-1p,fset1-topic-2p
+
+ingest-dev:
+  ssh_user: ubuntu
+  instance_type: c5a.large
+  instance_name: flink-dev

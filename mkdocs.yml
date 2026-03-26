@@ -1,0 +1,79 @@
+site_name: Icicle
+site_description: Real-time filesystem metadata monitoring via changelogs.
+repo_url: https://github.com/globus-labs/icicle
+repo_name: globus-labs/icicle
+
+extra_css:
+  - stylesheets/extra.css
+
+theme:
+  name: material
+  font:
+    text: Source Sans 3
+    code: Source Code Pro
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+nav:
+  - Home: index.md
+  - Snapshot Pipelines:
+    - Overview: ingest/00-overview.md
+    - Preprocessing: ingest/01-preprocessing.md
+    - Infrastructure: ingest/02-infrastructure.md
+    - Flink Setup: ingest/03-flink-setup.md
+    - Flink Pipelines: ingest/04-flink-pipelines.md
+    - Analysis Scripts: ingest/05-analysis-scripts.md
+  - Event Monitor:
+    - Overview: icicle/00-overview.md
+    - Infrastructure: icicle/02-infrastructure.md
+    - Lustre Backend: icicle/03-lustre-backend.md
+    - GPFS Backend: icicle/04-gpfs-backend.md
+    - Workloads: icicle/06-workloads.md
+    - Benchmarking: icicle/07-benchmarking.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - scripts.hooks.rewrite_links

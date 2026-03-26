@@ -1,0 +1,25 @@
+[
+  {
+    "PropertyGroupId": "kinesis.analytics.flink.run.options",
+    "PropertyMap": {
+      "jarfile": "lib/pyflink-dependencies.jar",
+      "pyFiles": "my_deps.zip,utils.zip,resources.zip",
+      "python": "main.py"
+    }
+  },
+  {
+    "PropertyGroupId": "IngestConfig",
+    "PropertyMap": {
+      "s3_input": "s3a://icicle-fs-small/fs-small-10k",
+      "agg_file": "itap.agg2.csv",
+      "execution_mode": "streaming",
+      "cmode": "dd",
+      "run": "1",
+      "pipeline_name": "PRI",
+      "pipeline_args": "usr|grp|dir",
+      "mock_ingest": "true",
+      "prefix_min": "1",
+      "prefix_max": "5"
+    }
+  }
+]
